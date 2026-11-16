@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Volume2, Lightbulb, RotateCcw, ArrowRight, CheckCircle2, Trophy, Delete } from 'lucide-react';
+import { Volume2, Lightbulb, RotateCcw, ArrowRight, CheckCircle2, Trophy, Delete, ChevronLeft, ChevronRight, Shuffle } from 'lucide-react';
 import { RUSSIAN_WORDS } from '../data/russianWords';
 import { VocabWord, WordDifficulty } from '../types/learning';
 import { RealisticIllustration } from './RealisticIllustration';
@@ -155,6 +155,21 @@ export const WordBuilderGame: React.FC<WordBuilderGameProps> = ({
     }
   };
 
+  const handleStepWord = (dir: -1 | 1) => {
+    playPop(soundEnabled);
+    setWordIndex((i) => (i + dir + levelWords.length) % levelWords.length);
+  };
+
+  const handleRandomWord = () => {
+    if (levelWords.length <= 1) return;
+    playPop(soundEnabled);
+    let next = Math.floor(Math.random() * levelWords.length);
+    if (next === wordIndex) {
+      next = (next + 1) % levelWords.length;
+    }
+    setWordIndex(next);
+  };
+
   const handleRestartLevel = () => {
     playPop(soundEnabled);
     setWordIndex(0);
@@ -173,7 +188,7 @@ export const WordBuilderGame: React.FC<WordBuilderGameProps> = ({
             შეხედე სურათს, მოუსმინე და ააწყვე რუსული სიტყვა ასოებისგან
           </p>
         </div>
-        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl shrink-0">
+        <div className="flex flex-wrap items-center gap-1 bg-slate-100 p-1 rounded-xl shrink-0">
           {([1, 2, 3] as WordDifficulty[]).map((lvl) => (
             <button
               key={lvl}
@@ -201,7 +216,7 @@ export const WordBuilderGame: React.FC<WordBuilderGameProps> = ({
               დონე {difficulty} წარმატებით დასრულდა!
             </h3>
             <p className="text-sm text-slate-600 mt-1">
-              შენ ააწყვე ყველა სიტყვა ({solvedCount} / {levelWords.length})!
+              შენ ააწყვე {solvedCount} / {levelWords.length} სიტყვა!
             </p>
           </div>
           <div className="flex items-center justify-center gap-3">
@@ -227,10 +242,38 @@ export const WordBuilderGame: React.FC<WordBuilderGameProps> = ({
         </div>
       ) : (
         <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-8 max-w-4xl mx-auto">
-          <div className="flex items-center justify-between text-xs font-medium text-slate-500 mb-5">
-            <span className="font-mono-num">
-              სიტყვა {wordIndex + 1} / {levelWords.length}
-            </span>
+          <div className="flex items-center justify-between text-xs font-medium text-slate-500 mb-5 gap-3">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => handleStepWord(-1)}
+                aria-label="წინა სიტყვა"
+                className="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-slate-900 cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <span className="font-mono-num font-semibold text-slate-700">
+                სიტყვა {wordIndex + 1} / {levelWords.length}
+              </span>
+              <button
+                type="button"
+                onClick={() => handleStepWord(1)}
+                aria-label="შემდეგი სიტყვა"
+                className="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-slate-900 cursor-pointer"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={handleRandomWord}
+                aria-label="შემთხვევითი სიტყვა"
+                title="შემთხვევითი სიტყვა"
+                className="inline-flex items-center gap-1 px-2.5 h-8 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 cursor-pointer whitespace-nowrap"
+              >
+                <Shuffle className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">სხვა სიტყვა</span>
+              </button>
+            </div>
             <span>
               {currentWord.categoryKa} · {currentWord.ru.length} ასო
             </span>

@@ -35,12 +35,12 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 function generateChallenge(): ChallengeItem[] {
-  const letters = shuffle(RUSSIAN_ALPHABET).slice(0, 4);
-  const words = shuffle(RUSSIAN_WORDS).slice(0, 4);
+  const letters = shuffle(RUSSIAN_ALPHABET).slice(0, 5);
+  const words = shuffle(RUSSIAN_WORDS).slice(0, 5);
 
   const items: ChallengeItem[] = [];
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     const l = letters[i];
     const lDistractors = shuffle(RUSSIAN_ALPHABET.filter((x) => x.id !== l.id)).slice(0, 3);
     items.push({
@@ -50,7 +50,9 @@ function generateChallenge(): ChallengeItem[] {
     });
 
     const w = words[i];
-    const wDistractors = shuffle(RUSSIAN_WORDS.filter((x) => x.id !== w.id)).slice(0, 3);
+    const wDistractors = shuffle(
+      RUSSIAN_WORDS.filter((x) => x.id !== w.id && x.imageKey !== w.imageKey)
+    ).slice(0, 3);
     items.push({
       kind: 'word-picture',
       target: w,

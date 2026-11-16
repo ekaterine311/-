@@ -59,7 +59,7 @@ export const RUSSIAN_ALPHABET: RussianLetter[] = [
     group: 'familiar',
     category: 'consonant',
     phoneticKa: '[ბ]',
-    spokenHint: 'ბэ',
+    spokenHint: 'бэ',
     georgianTip: 'მთავრულ «Б»-ს ზემოდან პატარა ქუდი აქვს, პატარა «б» კი ალუბალს ან ექვსიანს ჰგავს. იკითხება როგორც «ბ».',
     exampleWord: {
       ru: 'Бабочка',
@@ -211,11 +211,11 @@ export const RUSSIAN_ALPHABET: RussianLetter[] = [
     georgianTip: 'შებრუნებულ ლათინურ N-ს ჰგავს. იკითხება სუფთა ქართული «ი» ბგერასავით.',
     cursiveTipKa: 'ხელნაწერში პატარა «и» ჰგავს ინგლისურ «u»-ს!',
     exampleWord: {
-      ru: 'Игла',
-      ka: 'ნემსი',
-      transcriptionKa: 'იგლა',
+      ru: 'Игрушки',
+      ka: 'სათამაშოები',
+      transcriptionKa: 'იგრუშკი',
       highlightIndex: 0,
-      imageKey: 'needle',
+      imageKey: 'toys',
     },
   },
   {
@@ -285,7 +285,7 @@ export const RUSSIAN_ALPHABET: RussianLetter[] = [
     exampleWord: {
       ru: 'Медведь',
       ka: 'დათვი',
-      transcriptionKa: 'მედვედ',
+      transcriptionKa: 'მედვედь',
       highlightIndex: 0,
       imageKey: 'bear',
     },
@@ -437,11 +437,11 @@ export const RUSSIAN_ALPHABET: RussianLetter[] = [
     spokenHint: 'эф',
     georgianTip: 'ფანარს ან ქართულ «ფ»-საც კი წააგავს ფორმით! იკითხება როგორც «ფ».',
     exampleWord: {
-      ru: 'Флаг',
-      ka: 'დროშა',
-      transcriptionKa: 'ფლაგ',
+      ru: 'Футбол',
+      ka: 'ფეხბურთი',
+      transcriptionKa: 'ფუტბოლ',
       highlightIndex: 0,
-      imageKey: 'flag',
+      imageKey: 'soccer',
     },
   },
   {
@@ -527,13 +527,13 @@ export const RUSSIAN_ALPHABET: RussianLetter[] = [
     category: 'consonant',
     phoneticKa: '[შჩ / გრძელი რბილი შ]',
     spokenHint: 'ща',
-    georgianTip: '«Ш»-სავითაა, ოღონდ კუდი აქვს მარჯვნივ! იკითხება როგორც რბილი «შჩ» («Щука» = «შჩუკა»).',
+    georgianTip: '«Ш»-სავითაა, ოღონდ კუდი აქვს მარჯვნივ! იკითხება როგორც რბილი «შჩ» («Щенок» = «შჩენოკ»).',
     exampleWord: {
-      ru: 'Щука',
-      ka: 'ქარიყლაპია (თევზი)',
-      transcriptionKa: 'შჩუკა',
+      ru: 'Щенок',
+      ka: 'ლეკვი',
+      transcriptionKa: 'შჩენოკ',
       highlightIndex: 0,
-      imageKey: 'pike',
+      imageKey: 'puppy',
     },
   },
   {
@@ -601,11 +601,11 @@ export const RUSSIAN_ALPHABET: RussianLetter[] = [
     spokenHint: 'э',
     georgianTip: 'მარცხნივ შებრუნებული «С»-სავითაა შუაში ხაზით. «Е»-სგან განსხვავებით, ყოველთვის სუფთა «ე»-დ იკითხება («ი»-ს გარეშე)!',
     exampleWord: {
-      ru: 'Экран',
-      ka: 'ეკრანი',
-      transcriptionKa: 'ეკრან',
+      ru: 'Эскимо',
+      ka: 'ნაყინი',
+      transcriptionKa: 'ესკიმო',
       highlightIndex: 0,
-      imageKey: 'screen',
+      imageKey: 'icecream',
     },
   },
   {
@@ -623,7 +623,7 @@ export const RUSSIAN_ALPHABET: RussianLetter[] = [
       ka: 'ბზრიალა',
       transcriptionKa: 'იულა',
       highlightIndex: 0,
-      imageKey: 'spinningtop',
+      imageKey: 'spintop',
     },
   },
   {

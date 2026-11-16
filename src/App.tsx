@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Volume2, VolumeX, RotateCcw, ArrowRight } from 'lucide-react';
 import { NavTab, PlayerProgress } from './types/learning';
+import { RUSSIAN_ALPHABET } from './data/russianAlphabet';
+import { RUSSIAN_WORDS } from './data/russianWords';
 import { HERO_DESK_IMAGE } from './components/RealisticIllustration';
 import { AlphabetExplorer } from './components/AlphabetExplorer';
 import { LetterQuizGame } from './components/LetterQuizGame';
 import { WordBuilderGame } from './components/WordBuilderGame';
 import { WordMatchGame } from './components/WordMatchGame';
 import { DailyChallengeView } from './components/DailyChallengeView';
+import { PWAInstallButton, PWAUpdatePrompt, OfflineIndicator } from './components/PWAControls';
 import { playPop } from './utils/sound';
 
 const STORAGE_KEY = 'rusuli_anbani_progress_v1';
@@ -109,7 +112,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
       {/* Strict 3-Zone Top Bar */}
-      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200">
+      <header className="md:sticky md:top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-8">
           {/* Zone 1: Single-line Brand Wordmark */}
           <button
@@ -184,14 +187,14 @@ export default function App() {
             <span>
               ასოები:{' '}
               <strong className="font-mono-num text-slate-900">
-                {progress.learnedLetters.length} / 33
+                {progress.learnedLetters.length} / {RUSSIAN_ALPHABET.length}
               </strong>
             </span>
             <span aria-hidden="true" className="text-slate-300">·</span>
             <span>
               სიტყვები:{' '}
               <strong className="font-mono-num text-slate-900">
-                {progress.learnedWords.length} / 24
+                {progress.learnedWords.length} / {RUSSIAN_WORDS.length}
               </strong>
             </span>
             <span aria-hidden="true" className="text-slate-300">·</span>
@@ -206,7 +209,8 @@ export default function App() {
             </span>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <PWAInstallButton />
             <button
               type="button"
               onClick={handleToggleSound}
@@ -331,9 +335,12 @@ export default function App() {
       <footer className="border-t border-slate-200 bg-white mt-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
           <span>რუსული ანბანი · 5 კლასის თვალსაჩინო სავარჯიშო თამაში</span>
-          <span>33 ასო · 24 სიტყვა · ხმოვანი გახმოვანება და წერის დაფა</span>
+          <span>{RUSSIAN_ALPHABET.length} ასო · {RUSSIAN_WORDS.length} სიტყვა · რეალისტური ნახატები და ხმოვანი გახმოვანება</span>
         </div>
       </footer>
+
+      <PWAUpdatePrompt />
+      <OfflineIndicator />
     </div>
   );
 }
