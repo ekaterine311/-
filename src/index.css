@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Noto Sans Georgian', 'Outfit', system-ui, -apple-system, sans-serif;
+    --font-display: 'Outfit', 'Noto Sans Georgian', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Tactile card flip perspective */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Ruled notebook lines for letter tracing */
+.notebook-lines {
+  background-image:
+    linear-gradient(to bottom, transparent 24%, rgba(59, 130, 246, 0.14) 25%, transparent 26%),
+    linear-gradient(to bottom, transparent 49%, rgba(59, 130, 246, 0.22) 50%, transparent 51%),
+    linear-gradient(to bottom, transparent 74%, rgba(59, 130, 246, 0.14) 75%, transparent 76%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
