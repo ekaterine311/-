@@ -11,12 +11,17 @@ const distDir = path.resolve(__dirname, 'dist');
 const port = Number(process.env.PORT) || 8080;
 
 app.disable('x-powered-by');
+app.set('trust proxy', true);
 
 // Security and PWA-friendly headers
-app.use((_req, res, next) => {
+app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  if (req.headers['x-forwarded-proto'] === 'https') {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  }
   next();
 });
 
@@ -27,6 +32,9 @@ app.get('/healthz', (_req, res) => {
 
 // Never cache service worker, register script, or manifest so updates arrive promptly
 app.use((req, res, next) => {
+  if (req.path === '/manifest.webmanifest') {
+    res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8');
+  }
   if (
     req.path === '/sw.js' ||
     req.path === '/registerSW.js' ||

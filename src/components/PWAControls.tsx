@@ -6,66 +6,67 @@ import { useOnlineStatus } from '../hooks/useOnlineStatus';
 
 export const PWAInstallButton: React.FC = () => {
   const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
-  const [showIOSGuide, setShowIOSGuide] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
 
   if (isInstalled) {
     return null;
   }
 
-  if (isInstallable) {
-    return (
+  const handleInstallClick = async () => {
+    if (isInstallable) {
+      await install();
+      return;
+    }
+    setShowGuide(true);
+  };
+
+  return (
+    <>
       <button
         type="button"
-        onClick={install}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+        onClick={handleInstallClick}
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+          isInstallable
+            ? 'bg-blue-600 hover:bg-blue-700 text-white'
+            : 'border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700'
+        }`}
       >
         <Download className="w-3.5 h-3.5" />
-        დააყენე აპი
+        აპლიკაციის დაყენება
       </button>
-    );
-  }
 
-  if (isIOS) {
-    return (
-      <>
-        <button
-          type="button"
-          onClick={() => setShowIOSGuide(true)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+      {showGuide && (
+        <div
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-900/50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="pwa-install-title"
         >
-          <Download className="w-3.5 h-3.5" />
-          დაყენება iPhone-ზე
-        </button>
+          <div className="w-full max-w-sm rounded-2xl bg-white border border-slate-200 p-6 shadow-xl space-y-4">
+            <div className="flex items-start justify-between gap-3">
+              <h3 id="pwa-install-title" className="text-base font-bold text-slate-900">
+                {isIOS
+                  ? 'დააყენე აპლიკაცია iPhone / iPad-ზე'
+                  : 'როგორ დააყენო აპლიკაცია მოწყობილობაზე'}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setShowGuide(false)}
+                aria-label="დახურვა"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
 
-        {showIOSGuide && (
-          <div
-            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-900/50 p-4"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="ios-install-title"
-          >
-            <div className="w-full max-w-sm rounded-2xl bg-white border border-slate-200 p-6 shadow-xl space-y-4">
-              <div className="flex items-start justify-between gap-3">
-                <h3 id="ios-install-title" className="text-base font-bold text-slate-900">
-                  დააყენე აპლიკაცია iPhone / iPad-ზე
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setShowIOSGuide(false)}
-                  aria-label="დახურვა"
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
+            {isIOS ? (
               <ol className="space-y-3 text-sm text-slate-700">
                 <li className="flex items-start gap-2.5">
                   <span className="w-6 h-6 rounded-full bg-blue-50 text-blue-700 font-mono-num text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                     1
                   </span>
                   <span>
-                    Safari-ს ქვედა პანელზე დააჭირე{' '}
+                    გახსენი აპლიკაცია <strong className="text-slate-900">Safari</strong>-ში და ქვედა პანელზე დააჭირე{' '}
                     <strong className="inline-flex items-center gap-1 text-slate-900">
                       <Share className="w-3.5 h-3.5 text-blue-600" /> Share
                     </strong>{' '}
@@ -89,26 +90,42 @@ export const PWAInstallButton: React.FC = () => {
                     3
                   </span>
                   <span>
-                    დააჭირე <strong className="text-slate-900">Add</strong> — აპლიკაცია გამოჩნდება მთავარ ეკრანზე!
+                    დააჭირე <strong className="text-slate-900">Add</strong> — აპლიკაცია გაიხსნება დამოუკიდებელ ფანჯარაში!
                   </span>
                 </li>
               </ol>
+            ) : (
+              <div className="space-y-3 text-sm text-slate-700">
+                <p>
+                  <strong className="text-slate-900">Android (Chrome):</strong> გახსენი ბრაუზერის მენიუ (⋮) და აირჩიე{' '}
+                  <strong className="text-slate-900">Install app</strong> ან{' '}
+                  <strong className="text-slate-900">Add to Home screen</strong>.
+                </p>
+                <p>
+                  <strong className="text-slate-900">კომპიუტერი (Chrome / Edge):</strong> მისამართის ველის მარჯვენა კუთხეში დააჭირე დაყენების ხატულას (⊕ / Install).
+                </p>
+                <p>
+                  <strong className="text-slate-900">iPhone / iPad (Safari):</strong> დააჭირე{' '}
+                  <strong className="inline-flex items-center gap-1 text-slate-900">
+                    <Share className="w-3.5 h-3.5 text-blue-600" /> Share
+                  </strong>{' '}
+                  → <strong className="text-slate-900">Add to Home Screen</strong>.
+                </p>
+              </div>
+            )}
 
-              <button
-                type="button"
-                onClick={() => setShowIOSGuide(false)}
-                className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors cursor-pointer"
-              >
-                გასაგებია
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => setShowGuide(false)}
+              className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors cursor-pointer"
+            >
+              გასაგებია
+            </button>
           </div>
-        )}
-      </>
-    );
-  }
-
-  return null;
+        </div>
+      )}
+    </>
+  );
 };
 
 export const PWAUpdatePrompt: React.FC = () => {

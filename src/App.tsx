@@ -118,9 +118,16 @@ export default function App() {
           <button
             type="button"
             onClick={() => handleTabChange('alphabet')}
-            className="text-lg font-extrabold tracking-tight text-slate-900 whitespace-nowrap shrink-0 cursor-pointer"
+            className="inline-flex items-center gap-2.5 text-lg font-extrabold tracking-tight text-slate-900 whitespace-nowrap shrink-0 cursor-pointer"
           >
-            რუსული ანბანი
+            <img
+              src="/icon.svg"
+              alt=""
+              width={28}
+              height={28}
+              className="w-7 h-7 rounded-lg shrink-0"
+            />
+            <span>რუსული ანბანი</span>
           </button>
 
           {/* Zone 2: Concise Single-line Navigation Links */}
